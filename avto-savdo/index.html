@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avto Savdo Pro — O'zbekiston Avtomobil Savdosi Platformasi</title>
+  <meta name="description" content="Avtomobillar oldi-sotdisi uchun qulay desktop platforma. Yangi va minilgan mashinalar, narxlar, kredit kalkulyatori va to'g'ridan-to'g'ri aloqa.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container" id="appRoot">
+    <!-- TOP DESKTOP WINDOW BAR -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="brand-logo" id="brandLogo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9L2 12v4c0 .6.4 1 1 1h2"></path>
+              <circle cx="7" cy="17" r="2"></circle>
+              <circle cx="17" cy="17" r="2"></circle>
+              <path d="M5 12h14"></path>
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span class="logo-title">AVTO SAVDO <span class="badge-pro">PRO</span></span>
+            <span class="logo-subtitle">O'zbekiston №1 Avto Bozori</span>
+          </div>
+        </div>
+
+        <div class="header-search">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="globalSearchInput" placeholder="Marka, model, shahar bo'yicha qidirish (masalan: Tracker 2, Cobalt, BYD)...">
+          <button class="clear-search-btn" id="clearSearchBtn" title="Tozalash">&times;</button>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Valyuta almashinuvi -->
+        <div class="currency-toggle" id="currencyToggle" title="Valyutani o'zgartirish">
+          <span class="currency-label">Valyuta:</span>
+          <button class="currency-btn active" data-currency="USD">$ USD</button>
+          <button class="currency-btn" data-currency="UZS">SO'M</button>
+        </div>
+
+        <!-- Valyuta kursi info -->
+        <div class="rate-badge" title="Markaziy Bank taxminiy kursi">
+          <span class="rate-dot"></span>
+          <span>1$ = 12,850 UZS</span>
+        </div>
+
+        <!-- Mavzu o'zgartirish -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" title="Tun / Kun rejimi">
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- E'lon qo'shish (Sotish) -->
+        <button class="btn btn-primary btn-add-car" id="btnOpenAddModal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Mashina sotish</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ASOSIY ISH MAYDONI: SIDEBAR + CONTENT -->
+    <div class="app-body">
+      <!-- CHAP SIDEBAR (MENYU) -->
+      <aside class="app-sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-title">ASOSIY MENYU</div>
+          <nav class="sidebar-nav">
+            <button class="nav-item active" data-view="showroom" id="navShowroom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>Barcha avtomobillar</span>
+              <span class="nav-badge" id="totalCarsBadge">0</span>
+            </button>
+
+            <button class="nav-item" data-view="favorites" id="navFavorites">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+              <span>Sevimlilar</span>
+              <span class="nav-badge star-badge" id="favCountBadge">0</span>
+            </button>
+
+            <button class="nav-item" data-view="my-listings" id="navMyListings">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span>Mening e'lonlarim</span>
+              <span class="nav-badge" id="myListingsBadge">0</span>
+            </button>
+
+            <button class="nav-item" data-view="calculator" id="navCalculator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                <line x1="8" y1="6" x2="16" y2="6"></line>
+                <line x1="16" y1="14" x2="16" y2="18"></line>
+                <path d="M8 10h.01"></path>
+                <path d="M12 10h.01"></path>
+                <path d="M16 10h.01"></path>
+                <path d="M8 14h.01"></path>
+                <path d="M12 14h.01"></path>
+                <path d="M8 18h.01"></path>
+                <path d="M12 18h.01"></path>
+              </svg>
+              <span>Kredit kalkulyatori</span>
+            </button>
+
+            <button class="nav-item" data-view="analytics" id="navAnalytics">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+              <span>Bozor tahlili & Statistika</span>
+            </button>
+          </nav>
+        </div>
+
+        <div class="sidebar-section filter-sidebar-section" id="filterSidebarSection">
+          <div class="sidebar-title flex-between">
+            <span>TEZKOR FILTRLAR</span>
+            <button class="btn-text-reset" id="btnResetFilters">Tozalash</button>
+          </div>
+
+          <!-- Markalar tezlari -->
+          <div class="filter-group">
+            <label class="filter-label">Marka bo'yicha:</label>
+            <select id="filterBrandSelect" class="app-select">
+              <option value="ALL">Barcha markalar</option>
+              <option value="Chevrolet">Chevrolet</option>
+              <option value="BYD">BYD</option>
+              <option value="Kia">Kia</option>
+              <option value="Hyundai">Hyundai</option>
+              <option value="Mercedes-Benz">Mercedes-Benz</option>
+              <option value="BMW">BMW</option>
+              <option value="Toyota">Toyota</option>
+              <option value="Chery">Chery</option>
+              <option value="Geely">Geely</option>
+            </select>
+          </div>
+
+          <!-- Narx oralig'i -->
+          <div class="filter-group">
+            <label class="filter-label">Maksimal narx: <span id="priceDisplayValue">$60,000</span></label>
+            <input type="range" id="priceRangeInput" min="5000" max="100000" step="1000" value="100000" class="app-range">
+            <div class="range-labels">
+              <span>$5K</span>
+              <span>$50K</span>
+              <span>$100K+</span>
+            </div>
+          </div>
+
+          <!-- Uzatma qutisi -->
+          <div class="filter-group">
+            <label class="filter-label">Uzatma qutisi (Karobka):</label>
+            <div class="pill-group" id="transmissionPills">
+              <button class="pill-btn active" data-val="ALL">Barchasi</button>
+              <button class="pill-btn" data-val="Avtomat">Avtomat</button>
+              <button class="pill-btn" data-val="Mexanika">Mexanika</button>
+            </div>
+          </div>
+
+          <!-- Yoqilg'i turi -->
+          <div class="filter-group">
+            <label class="filter-label">Yoqilg'i turi:</label>
+            <select id="filterFuelSelect" class="app-select">
+              <option value="ALL">Barcha turlar</option>
+              <option value="Benzin">Benzin</option>
+              <option value="Gaz">Gaz / Metan</option>
+              <option value="Gibrid">Gibrid</option>
+              <option value="Elektr">Elektr</option>
+            </select>
+          </div>
+
+          <!-- Ishlab chiqarilgan yili -->
+          <div class="filter-group">
+            <label class="filter-label">Yilidan boshlab:</label>
+            <select id="filterYearSelect" class="app-select">
+              <option value="ALL">Ixtiyoriy yil</option>
+              <option value="2024">2024 - yangi</option>
+              <option value="2023">2023 va undan yangi</option>
+              <option value="2022">2022 va undan yangi</option>
+              <option value="2020">2020 va undan yangi</option>
+              <option value="2015">2015 va undan yangi</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Sidebar pastki ma'lumot qismi -->
+        <div class="sidebar-footer">
+          <div class="support-card">
+            <div class="support-icon">🤝</div>
+            <div class="support-info">
+              <strong>Xavfsiz Oldi-Sotdi</strong>
+              <p>Barcha e'lonlar to'g'ridan-to'g'ri egalaridan tekshiriladi.</p>
+            </div>
+          </div>
+          <div class="app-version">Versiya: 2.4 Desktop Pro • 2026</div>
+        </div>
+      </aside>
+
+      <!-- O'NG ASOSIY KONTENT SOHASI -->
+      <main class="app-main">
+        <!-- 1. VITRINA KO'RINISHI (SHOWROOM) -->
+        <section class="view-panel active" id="viewShowroom">
+          <!-- Banner & Statistik panellar -->
+          <div class="dashboard-hero">
+            <div class="hero-content">
+              <div class="hero-tag">🔥 O'zbekistonda eng ommabop avto-platforma</div>
+              <h1 class="hero-title">Orzuingizdagi mashinani toping yoki o'z narxingizda soting!</h1>
+              <p class="hero-desc">Barcha GM, BYD, Kia, Hyundai va xorijiy avtomobillar to'liq texnik tavsifi, shaffof narxlar va qulay kredit kalkulyatori bilan.</p>
+              
+              <div class="hero-actions">
+                <button class="btn btn-primary" id="btnHeroSell">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  E'lon joylashtirish (Tekin)
+                </button>
+                <button class="btn btn-secondary" id="btnHeroCalc">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line></svg>
+                  Kredit hisoblash
+                </button>
+              </div>
+            </div>
+
+            <div class="hero-stats-grid">
+              <div class="stat-pill">
+                <div class="stat-num" id="statTotalCars">8 ta</div>
+                <div class="stat-lbl">Faol e'lonlar</div>
+              </div>
+              <div class="stat-pill">
+                <div class="stat-num" id="statAvgPrice">$27,300</div>
+                <div class="stat-lbl">O'rtacha narx</div>
+              </div>
+              <div class="stat-pill">
+                <div class="stat-num">0%</div>
+                <div class="stat-lbl">Vositachilik haqi</div>
+              </div>
+              <div class="stat-pill">
+                <div class="stat-num">24/7</div>
+                <div class="stat-lbl">Tezkor aloqa</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Marka teglari paneli (Quick Brands Horizontal Bar) -->
+          <div class="brand-bar-container">
+            <div class="brand-bar-scroll" id="brandQuickBar">
+              <button class="brand-chip active" data-brand="ALL">Barchasi</button>
+              <button class="brand-chip" data-brand="Chevrolet">🚗 Chevrolet</button>
+              <button class="brand-chip" data-brand="BYD">⚡ BYD</button>
+              <button class="brand-chip" data-brand="Kia">🇰🇷 Kia</button>
+              <button class="brand-chip" data-brand="Hyundai">🚘 Hyundai</button>
+              <button class="brand-chip" data-brand="Mercedes-Benz">⭐ Mercedes-Benz</button>
+              <button class="brand-chip" data-brand="BMW">🏎️ BMW</button>
+              <button class="brand-chip" data-brand="Toyota">🇯🇵 Toyota</button>
+              <button class="brand-chip" data-brand="Chery">🇨🇳 Chery</button>
+            </div>
+          </div>
+
+          <!-- Vitrina toolbar: Saralash va Ko'rinish rejimi -->
+          <div class="showroom-toolbar">
+            <div class="toolbar-left">
+              <span class="results-count" id="resultsCount">Natijalar: <strong>8 ta</strong> mashina</span>
+              <div class="active-filter-tags" id="activeFilterTags"></div>
+            </div>
+
+            <div class="toolbar-right">
+              <div class="sort-wrapper">
+                <label for="sortSelect">Saralash:</label>
+                <select id="sortSelect" class="app-select sort-select">
+                  <option value="newest">Eng yangi e'lonlar</option>
+                  <option value="price-asc">Narxi: Arzondan qimmatga</option>
+                  <option value="price-desc">Narxi: Qimmatdan arzonga</option>
+                  <option value="mileage-asc">Eng kam probeg</option>
+                  <option value="year-desc">Eng yangi chiqqan yili</option>
+                </select>
+              </div>
+
+              <div class="view-mode-toggle">
+                <button class="view-btn active" id="viewModeGrid" title="Kataklar ko'rinishi">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                  </svg>
+                </button>
+                <button class="view-btn" id="viewModeList" title="Ro'yxat ko'rinishi">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mashinalar gridi -->
+          <div class="cars-grid" id="carsContainer">
+            <!-- JavaScript orqali generatsiya bo'ladi -->
+          </div>
+
+          <!-- Hech narsa topilmadi holati -->
+          <div class="empty-state hidden" id="emptyState">
+            <div class="empty-icon">🚗💨</div>
+            <h3>Qidiruvingiz bo'yicha mashina topilmadi</h3>
+            <p>Filtr parametrlarini o'zgartirib ko'ring yoki boshqa so'rov kiriting.</p>
+            <button class="btn btn-secondary" id="btnEmptyReset">Barcha filtrlarni bekor qilish</button>
+          </div>
+        </section>
+
+        <!-- 2. SEVIMLILAR KO'RINISHI (FAVORITES) -->
+        <section class="view-panel" id="viewFavorites">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">❤️ Saqlangan avtomobillar</h2>
+              <p class="panel-subtitle">Sizga yoqqan va keyinroq ko'rish uchun belgilangan mashinalar</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btnClearAllFavorites">Ro'yxatni tozalash</button>
+          </div>
+          <div class="cars-grid" id="favoritesContainer"></div>
+          <div class="empty-state hidden" id="favEmptyState">
+            <div class="empty-icon">⭐</div>
+            <h3>Hozircha sevimlilar ro'yxati bo'sh</h3>
+            <p>Mashina kartasidagi yurakcha belgisini bosib, o'zingizga yoqqan mashinalarni bu yerda saqlang.</p>
+            <button class="btn btn-primary" data-go-view="showroom">Vitrinaga qaytish</button>
+          </div>
+        </section>
+
+        <!-- 3. MENING E'LONLARIM (MY LISTINGS) -->
+        <section class="view-panel" id="viewMyListings">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">📋 Mening e'lonlarim</h2>
+              <p class="panel-subtitle">Siz sotuvga qo'ygan barcha avtomobillarni boshqarish</p>
+            </div>
+            <button class="btn btn-primary" id="btnOpenAddModalFromMyListings">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Yangi e'lon qo'shish
+            </button>
+          </div>
+          <div class="cars-grid" id="myListingsContainer"></div>
+          <div class="empty-state hidden" id="myListingsEmptyState">
+            <div class="empty-icon">📝</div>
+            <h3>Siz hali birorta ham e'lon joylashtirmadingiz</h3>
+            <p>Mashinangizni tez va xavfsiz sotish uchun 2 daqiqada yangi e'lon qo'shing!</p>
+            <button class="btn btn-primary" id="btnEmptyAddCar">Mashina sotish</button>
+          </div>
+        </section>
+
+        <!-- 4. KREDIT KALKULYATORI (CALCULATOR) -->
+        <section class="view-panel" id="viewCalculator">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">🧮 Avto-Kredit va Lizing Kalkulyatori</h2>
+              <p class="panel-subtitle">O'zbekiston banklari shartlari asosida oylik to'lov va umumiy xarajatlarni aniq hisoblang</p>
+            </div>
+          </div>
+
+          <div class="calculator-layout">
+            <div class="calc-card calc-form">
+              <h3 class="calc-section-title">Kredit parametrlari</h3>
+
+              <div class="form-group">
+                <label for="calcCarPrice">Mashina narxi ($ USD):</label>
+                <div class="input-with-badge">
+                  <input type="number" id="calcCarPrice" value="20000" min="1000" step="500" class="app-input">
+                  <span class="input-unit">USD</span>
+                </div>
+                <div class="calc-quick-values">
+                  <button type="button" class="btn-quick-val" data-val="12000">$12,000</button>
+                  <button type="button" class="btn-quick-val" data-val="20000">$20,000</button>
+                  <button type="button" class="btn-quick-val" data-val="30000">$30,000</button>
+                  <button type="button" class="btn-quick-val" data-val="50000">$50,000</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="flex-between">
+                  <label for="calcDownPaymentPercent">Boshlang'ich to'lov:</label>
+                  <strong class="highlight-val"><span id="calcDownPercentLabel">30</span>% (<span id="calcDownAmountLabel">$6,000</span>)</strong>
+                </div>
+                <input type="range" id="calcDownPaymentPercent" min="10" max="80" step="5" value="30" class="app-range">
+                <div class="range-labels">
+                  <span>10%</span>
+                  <span>30%</span>
+                  <span>50%</span>
+                  <span>80%</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="flex-between">
+                  <label for="calcTermMonths">Kredit muddati:</label>
+                  <strong class="highlight-val"><span id="calcTermLabel">36</span> oy (<span id="calcTermYearsLabel">3 yil</span>)</strong>
+                </div>
+                <input type="range" id="calcTermMonths" min="12" max="60" step="6" value="36" class="app-range">
+                <div class="range-labels">
+                  <span>12 oy</span>
+                  <span>24 oy</span>
+                  <span>36 oy</span>
+                  <span>48 oy</span>
+                  <span>60 oy</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="flex-between">
+                  <label for="calcInterestRate">Bank yillik foiz stavkasi:</label>
+                  <strong class="highlight-val"><span id="calcInterestLabel">22</span>%</strong>
+                </div>
+                <input type="range" id="calcInterestRate" min="16" max="32" step="1" value="22" class="app-range">
+                <div class="range-labels">
+                  <span>16% (Imtiyozli)</span>
+                  <span>22% (Standart)</span>
+                  <span>32%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="calc-card calc-result">
+              <h3 class="calc-section-title">Hisob-kitob natijasi</h3>
+              
+              <div class="result-highlight-box">
+                <div class="res-sub">Oylik to'lov (Taxminiy):</div>
+                <div class="res-main-num" id="resMonthlyPayment">$534</div>
+                <div class="res-in-uzs" id="resMonthlyPaymentUzs">≈ 6,861,900 so'm / oyiga</div>
+              </div>
+
+              <div class="calc-details-list">
+                <div class="calc-detail-row">
+                  <span>Kreditga olinayotgan summa:</span>
+                  <strong id="resLoanAmount">$14,000</strong>
+                </div>
+                <div class="calc-detail-row">
+                  <span>Boshlang'ich to'lov miqdori:</span>
+                  <strong id="resDownPayment">$6,000</strong>
+                </div>
+                <div class="calc-detail-row">
+                  <span>Foizlar bo'yicha ortiqcha to'lov:</span>
+                  <strong id="resTotalInterest" class="text-warning">$5,224</strong>
+                </div>
+                <div class="calc-detail-row total-row">
+                  <span>Umumiy to'lanadigan summa:</span>
+                  <strong id="resTotalPayment">$25,224</strong>
+                </div>
+              </div>
+
+              <div class="calc-tips-box">
+                <div class="tip-icon">💡</div>
+                <div class="tip-text">
+                  <strong>Maslahat:</strong> Boshlang'ich to'lovni 40% dan oshirsangiz, aksariyat tijorat banklarida imtiyozli stavkalar va kamroq hujjat talab etiladi.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. BOZOR TAHLILI VA STATISTIKA (ANALYTICS) -->
+        <section class="view-panel" id="viewAnalytics">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">📊 Avtomobil bozori tahlili va Statistika</h2>
+              <p class="panel-subtitle">O'zbekiston ichki bozoridagi narx tendensiyalari va ommabop modellar</p>
+            </div>
+          </div>
+
+          <div class="analytics-grid">
+            <div class="analytics-card">
+              <h4>🔥 Eng ko'p sotilayotgan markalar ulushi</h4>
+              <div class="brand-bar-chart">
+                <div class="chart-item">
+                  <div class="chart-label">Chevrolet (GM)</div>
+                  <div class="chart-bar-wrap">
+                    <div class="chart-bar-fill" style="width: 58%; background: linear-gradient(90deg, #f59e0b, #d97706);"></div>
+                  </div>
+                  <div class="chart-val">58%</div>
+                </div>
+                <div class="chart-item">
+                  <div class="chart-label">BYD (Elektro/Gibrid)</div>
+                  <div class="chart-bar-wrap">
+                    <div class="chart-bar-fill" style="width: 22%; background: linear-gradient(90deg, #10b981, #059669);"></div>
+                  </div>
+                  <div class="chart-val">22%</div>
+                </div>
+                <div class="chart-item">
+                  <div class="chart-label">Kia / Hyundai</div>
+                  <div class="chart-bar-wrap">
+                    <div class="chart-bar-fill" style="width: 12%; background: linear-gradient(90deg, #3b82f6, #1d4ed8);"></div>
+                  </div>
+                  <div class="chart-val">12%</div>
+                </div>
+                <div class="chart-item">
+                  <div class="chart-label">Boshqa xorijiy (Chery, BMW...)</div>
+                  <div class="chart-bar-wrap">
+                    <div class="chart-bar-fill" style="width: 8%; background: linear-gradient(90deg, #8b5cf6, #6d28d9);"></div>
+                  </div>
+                  <div class="chart-val">8%</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="analytics-card">
+              <h4>💰 O'rtacha bozor narxlari (2024–2026)</h4>
+              <ul class="price-trend-list">
+                <li>
+                  <span>Chevrolet Cobalt 4-pozitsiya</span>
+                  <strong>$11,800 - $12,600</strong>
+                </li>
+                <li>
+                  <span>Chevrolet Gentra 3-pozitsiya</span>
+                  <strong>$12,800 - $13,900</strong>
+                </li>
+                <li>
+                  <span>Chevrolet Tracker 2 Premier</span>
+                  <strong>$18,500 - $20,200</strong>
+                </li>
+                <li>
+                  <span>Chevrolet Onix Premier</span>
+                  <strong>$14,500 - $15,800</strong>
+                </li>
+                <li>
+                  <span>BYD Song Plus Champion</span>
+                  <strong>$26,500 - $29,500</strong>
+                </li>
+                <li>
+                  <span>Kia K5 (2.0 / 2.5)</span>
+                  <strong>$29,000 - $35,000</strong>
+                </li>
+              </ul>
+            </div>
+
+            <div class="analytics-card full-width">
+              <h4>🛡️ Mashina sotib olishda xavfsizlik va maslahatlar</h4>
+              <div class="safety-grid">
+                <div class="safety-box">
+                  <div class="sb-num">1</div>
+                  <strong>Taqiq va jarimalarni tekshiring</strong>
+                  <p>YHXBB va MIB orqali avtomashinada jarima, taqiq yoki notarial garov yo'qligini tekshiring.</p>
+                </div>
+                <div class="safety-box">
+                  <div class="sb-num">2</div>
+                  <strong>Kuzov va kraska qoplamasi</strong>
+                  <p>Tolshinomer qurilmasi bilan detaldagi bo'yoq qalinligini o'lchab, urilmaganligiga ishonch hosil qiling.</p>
+                </div>
+                <div class="safety-box">
+                  <div class="sb-num">3</div>
+                  <strong>Elektronika va diagnostika</strong>
+                  <p>OBD-2 skaneri orqali kompyuter xatoliklari va haqiqiy probegni tekshirtiring.</p>
+                </div>
+                <div class="safety-box">
+                  <div class="sb-num">4</div>
+                  <strong>Notarial rasmiylashtirish</strong>
+                  <p>Barcha oldi-sotdi shartnomalarini rasmiy notarius orqali davlat ro'yxatidan o'tkazing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- MODAL 1: MASHINA TAFSILOTLARI MODALI (DETAILS MODAL) -->
+    <div class="modal-backdrop hidden" id="modalCarDetails">
+      <div class="modal-card modal-large">
+        <button class="modal-close-btn" id="btnCloseDetailsModal">&times;</button>
+        <div class="modal-body details-body" id="detailsModalContent">
+          <!-- JS orqali to'ldiriladi -->
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 2: YANGI E'LON BERISH (MASHINA SOTISH) MODALI -->
+    <div class="modal-backdrop hidden" id="modalAddCar">
+      <div class="modal-card modal-medium">
+        <button class="modal-close-btn" id="btnCloseAddModal">&times;</button>
+        <div class="modal-header">
+          <div class="modal-icon-badge">🚗</div>
+          <div>
+            <h3 class="modal-title">Mashinangizni sotuvga qo'ying</h3>
+            <p class="modal-subtitle">E'loningiz darhol minglab xaridorlarga ko'rinadi</p>
+          </div>
+        </div>
+
+        <form id="addCarForm" class="add-car-form">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="addBrand">Marka *</label>
+              <select id="addBrand" class="app-select" required>
+                <option value="">Markani tanlang</option>
+                <option value="Chevrolet">Chevrolet</option>
+                <option value="BYD">BYD</option>
+                <option value="Kia">Kia</option>
+                <option value="Hyundai">Hyundai</option>
+                <option value="Mercedes-Benz">Mercedes-Benz</option>
+                <option value="BMW">BMW</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Chery">Chery</option>
+                <option value="Geely">Geely</option>
+                <option value="Boshqa">Boshqa marka</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="addModel">Model *</label>
+              <input type="text" id="addModel" class="app-input" placeholder="Masalan: Tracker 2, Gentra, Song Plus" required>
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="addYear">Yili *</label>
+              <input type="number" id="addYear" class="app-input" min="1990" max="2026" value="2023" required>
+            </div>
+
+            <div class="form-group">
+              <label for="addPrice">Narxi ($ USD) *</label>
+              <input type="number" id="addPrice" class="app-input" min="500" step="100" placeholder="Masalan: 18500" required>
+            </div>
+
+            <div class="form-group">
+              <label for="addMileage">Probeg (km) *</label>
+              <input type="number" id="addMileage" class="app-input" min="0" placeholder="Masalan: 25000" required>
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="addTransmission">Karobka (Uzatma) *</label>
+              <select id="addTransmission" class="app-select" required>
+                <option value="Avtomat">Avtomat</option>
+                <option value="Mexanika">Mexanika</option>
+                <option value="Variator (CVT)">Variator (CVT)</option>
+                <option value="Robot">Robot</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="addFuel">Yoqilg'i turi *</label>
+              <select id="addFuel" class="app-select" required>
+                <option value="Benzin">Benzin</option>
+                <option value="Gaz / Metan">Gaz / Metan</option>
+                <option value="Gaz / Propan">Gaz / Propan</option>
+                <option value="Gibrid (DM-i)">Gibrid</option>
+                <option value="Elektr">Elektr (EV)</option>
+                <option value="Dizel">Dizel</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="addColor">Rangi *</label>
+              <input type="text" id="addColor" class="app-input" placeholder="Masalan: Oq marvarid, Qora" required>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="addEngine">Dvigatel hajmi / kuchi</label>
+              <input type="text" id="addEngine" class="app-input" placeholder="Masalan: 1.5L (107 ot kuchi)">
+            </div>
+
+            <div class="form-group">
+              <label for="addLocation">Joylashuv (Shahar/Tuman) *</label>
+              <input type="text" id="addLocation" class="app-input" placeholder="Masalan: Toshkent, Chilonzor" required>
+            </div>
+          </div>
+
+          <!-- Rasm qo'shish -->
+          <div class="form-group">
+            <label>Mashina fotosurati *</label>
+            <div class="image-upload-tabs">
+              <div class="upload-options">
+                <input type="file" id="addImageFile" accept="image/*" class="file-input-hidden">
+                <label for="addImageFile" class="file-upload-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  Kompyuterdan rasm tanlash
+                </label>
+                <span class="upload-or">yoki URL kiritish:</span>
+                <input type="url" id="addImageUrl" class="app-input" placeholder="https://... rasm manzili">
+              </div>
+              <div class="image-preview-container hidden" id="imagePreviewContainer">
+                <img id="imagePreview" src="" alt="Ko'rib chiqish">
+                <button type="button" class="btn-remove-preview" id="btnRemovePreview">&times;</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="addDescription">Mashina haqida batafsil ma'lumot (Tavsif) *</label>
+            <textarea id="addDescription" class="app-textarea" rows="3" placeholder="Holati, kraskasi tozaligi, qo'shimcha jihozlari (chexol, polik, audio, qilingan xizmatlar)..." required></textarea>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="addSellerName">Sizning ismingiz *</label>
+              <input type="text" id="addSellerName" class="app-input" placeholder="Masalan: Sardorbek" required>
+            </div>
+
+            <div class="form-group">
+              <label for="addSellerPhone">Telefon raqamingiz *</label>
+              <input type="tel" id="addSellerPhone" class="app-input" placeholder="+998 90 123 45 67" required>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="btnCancelAdd">Bekor qilish</button>
+            <button type="submit" class="btn btn-primary" id="btnSubmitAddCar">
+              <span>E'lonni joylashtirish</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL 3: TAKLIF BERISH (TORG / OFFER MODAL) -->
+    <div class="modal-backdrop hidden" id="modalOffer">
+      <div class="modal-card modal-small">
+        <button class="modal-close-btn" id="btnCloseOfferModal">&times;</button>
+        <div class="modal-header">
+          <div class="modal-icon-badge">🤝</div>
+          <div>
+            <h3 class="modal-title">Narx taklif qilish (Savdolashish)</h3>
+            <p class="modal-subtitle" id="offerCarSubtitle">Mashina uchun o'z narxingizni taklif qiling</p>
+          </div>
+        </div>
+
+        <form id="offerForm" class="offer-form">
+          <input type="hidden" id="offerCarId">
+          <div class="offer-current-price">
+            <span>Sotuvchi so'ragan narx:</span>
+            <strong id="offerCurrentPriceDisplay">$0</strong>
+          </div>
+
+          <div class="form-group">
+            <label for="offerPriceInput">Sizning taklifingiz ($ USD):</label>
+            <input type="number" id="offerPriceInput" class="app-input offer-input" placeholder="Taklif etiladigan summa" required>
+          </div>
+
+          <div class="form-group">
+            <label for="offerMessage">Qo'shimcha xabar yoki shart:</label>
+            <input type="text" id="offerMessage" class="app-input" placeholder="Masalan: Naqd pulim bor, bugun nomimga o'tkazaman">
+          </div>
+
+          <div class="form-group">
+            <label for="offerPhone">Telefon raqamingiz:</label>
+            <input type="tel" id="offerPhone" class="app-input" placeholder="+998 90 123 45 67" required>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="btnCancelOffer">Bekor qilish</button>
+            <button type="submit" class="btn btn-primary">Taklifni yuborish</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

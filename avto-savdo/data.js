@@ -1,0 +1,218 @@
+// Boshlang'ich avtomobillar ma'lumotlar bazasi (Uzbekistan bozori va zamonaviy mashinalar)
+const INITIAL_CARS = [
+  {
+    id: "car-1",
+    title: "Chevrolet Tracker 2 Premier",
+    brand: "Chevrolet",
+    model: "Tracker",
+    year: 2023,
+    price: 19500, // USD
+    mileage: 18000,
+    fuel: "Benzin",
+    transmission: "Avtomat",
+    color: "Oq marvarid (Pearl White)",
+    engine: "1.2 Turbo (132 ot kuchi)",
+    location: "Toshkent shahri, Chilonzor",
+    sellerName: "Jasur Rahimov",
+    sellerPhone: "+998 90 123 45 67",
+    date: "Bugun, 09:40",
+    views: 420,
+    featured: true,
+    condition: "A'lo darajada",
+    description: "Tracker 2 Premier eng to'liq komplektatsiya. Kraskasi toza, 100% javob. Panorama tom, kruiz nazorat, koja salon, start-stop tizimi. Faqat shahar ichida minilgan, saloniga qimmat chexol va 7D polik qilingan. Moy va filtrlar o'z vaqtida almashtirilgan.",
+    image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80"
+    ]
+  },
+  {
+    id: "car-2",
+    title: "BYD Song Plus Champion Flagship",
+    brand: "BYD",
+    model: "Song Plus",
+    year: 2024,
+    price: 28200,
+    mileage: 8500,
+    fuel: "Gibrid (DM-i)",
+    transmission: "Avtomat",
+    color: "Kulrang (Smoke Grey)",
+    engine: "1.5L DM-i Super Hybrid (110 km EV)",
+    location: "Toshkent shahri, Mirzo Ulug'bek",
+    sellerName: "Sardorbek Aliyev",
+    sellerPhone: "+998 93 555 77 88",
+    date: "Kecha, 18:20",
+    views: 890,
+    featured: true,
+    condition: "Yangi (Ideal)",
+    description: "BYD Song Plus 2024 Champion edition. Yangi holatda, o'zim uchun olib kelingan. Rus tili o'rnatilgan, sim-karta aktivatsiya qilingan, 360 kamera, adaptiv kruiz nazorat, qizdiriladigan va sovutiladigan o'rindiqlar. Zaryadlovchi stantsiyasi qo'shib beriladi.",
+    image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80"
+    ]
+  },
+  {
+    id: "car-3",
+    title: "Chevrolet Gentra Elegance Plus (3-Pozitsiya)",
+    brand: "Chevrolet",
+    model: "Gentra",
+    year: 2022,
+    price: 13400,
+    mileage: 42000,
+    fuel: "Benzin / Gaz (Metan 4-pokoleniye)",
+    transmission: "Avtomat",
+    color: "Qora (Magiya)",
+    engine: "1.5L DOHC (107 ot kuchi)",
+    location: "Samarqand shahri",
+    sellerName: "Bobur Mirzayev",
+    sellerPhone: "+998 97 711 22 33",
+    date: "Bugun, 08:15",
+    views: 654,
+    featured: false,
+    condition: "Yaxshi",
+    description: "Gentra 2022 avtomat, lyuk, ABS bor. 100L italyan metan o'rnatilgan, hujjatlari joyida. Magicar 908 pult, yaxshi audio tizim, yangi yumshoq balonlar taqilgan. Mayda tirnalgan joyi bor, kraska sepilmagan.",
+    image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=900&q=80"
+    ]
+  },
+  {
+    id: "car-4",
+    title: "Kia K5 GT-Line 2.5 AT",
+    brand: "Kia",
+    model: "K5",
+    year: 2023,
+    price: 33900,
+    mileage: 14000,
+    fuel: "Benzin",
+    transmission: "Avtomat (8 pog'onali)",
+    color: "To'q ko'k metallik",
+    engine: "2.5 Smartstream GDI (194 ot kuchi)",
+    location: "Toshkent shahri, Yakkasaroy",
+    sellerName: "Ulug'bek Qosimov",
+    sellerPhone: "+998 99 800 11 22",
+    date: "2 kun oldin",
+    views: 1120,
+    featured: true,
+    condition: "A'lo darajada",
+    description: "Kia K5 rasmiy dilerdan olingan, kafolati bor (5 yil / 150,000 km). Panoramali lyuk, Harman Kardon audiotizim, head-up display, to'liq bron plyonka qilingan. Hech qanday xarajati yo'q.",
+    image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=900&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=900&q=80"
+    ]
+  },
+  {
+    id: "car-5",
+    title: "Chevrolet Cobalt 4-Pozitsiya Style AT",
+    brand: "Chevrolet",
+    model: "Cobalt",
+    year: 2023,
+    price: 12200,
+    mileage: 23000,
+    fuel: "Benzin",
+    transmission: "Avtomat",
+    color: "Oq (Gaz)",
+    engine: "1.5L (106 ot kuchi)",
+    location: "Farg'ona shahri",
+    sellerName: "Akmaljon Nurmatov",
+    sellerPhone: "+998 91 333 44 55",
+    date: "Bugun, 07:30",
+    views: 510,
+    featured: false,
+    condition: "Ideal",
+    description: "Cobalt 4-pozitsiya Style qora diskali. Birinchi qo'l, salondan o'zim haydab chiqqanman. Kraska toza, tegilmagan. Tanirovka ruxsatnomasi bor, yangi Cardinar chexol va videoregistrator sovg'a.",
+    image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=900&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=900&q=80"
+    ]
+  },
+  {
+    id: "car-6",
+    title: "Mercedes-Benz E 300 AMG Line",
+    brand: "Mercedes-Benz",
+    model: "E-Class",
+    year: 2021,
+    price: 52000,
+    mileage: 38000,
+    fuel: "Benzin",
+    transmission: "Avtomat (9G-Tronic)",
+    color: "Qora obsidian",
+    engine: "2.0 Turbo (258 ot kuchi)",
+    location: "Toshkent shahri, Mirobod",
+    sellerName: "Doniyor Karimov",
+    sellerPhone: "+998 90 999 00 11",
+    date: "3 kun oldin",
+    views: 1840,
+    featured: true,
+    condition: "A'lo darajada",
+    description: "Haqiqiy biznes klass. AMG paket, Burmester acoustic tizimi, Multibeam LED faralar, qizdiriladigan va ventilyatsiyali o'rindiqlar. Yevropadan keltirilgan, to'liq bojxona rasmiylashtiruvi o'tgan.",
+    image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=900&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=900&q=80"
+    ]
+  },
+  {
+    id: "car-7",
+    title: "Hyundai Santa Fe Calligraphy 2.5T",
+    brand: "Hyundai",
+    model: "Santa Fe",
+    year: 2023,
+    price: 44500,
+    mileage: 19000,
+    fuel: "Benzin",
+    transmission: "Avtomat",
+    color: "Marvarid Oq",
+    engine: "2.5 Turbo Smartstream (281 ot kuchi)",
+    location: "Namangan shahri",
+    sellerName: "Farrux Yusupov",
+    sellerPhone: "+998 94 400 33 22",
+    date: "Kecha, 15:10",
+    views: 730,
+    featured: false,
+    condition: "A'lo darajada",
+    description: "7 o'rindiqli nappa charmli Calligraphy versiya. To'liq 4x4 (HTRAC) tizimi, qora patalok, 360 gradus kameralar, to'xtash assistenti. Faqat oilaviy safarlarda haydalgan.",
+    image: "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=900&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=900&q=80"
+    ]
+  },
+  {
+    id: "car-8",
+    title: "Chevrolet Onix Premier 2 Turbo",
+    brand: "Chevrolet",
+    model: "Onix",
+    year: 2023,
+    price: 15300,
+    mileage: 16000,
+    fuel: "Benzin",
+    transmission: "Avtomat",
+    color: "Kulrang metallik (Misty Lake)",
+    engine: "1.2 Turbo (132 ot kuchi)",
+    location: "Buxoro shahri",
+    sellerName: "Nodir Salimov",
+    sellerPhone: "+998 93 212 99 88",
+    date: "Bugun, 10:10",
+    views: 380,
+    featured: false,
+    condition: "Ideal",
+    description: "Onix Premier 2: simsiz quvvatlash, barcha o'rindiqlar isitilishi, avtoparkovka tizimi, ko'r zonalarni aniqlash datchigi. Bir qo'l, moylari yangi almashtirildi.",
+    image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80"
+    ]
+  }
+];
+
+// O'zbekistonda mashhur markalar va modellar
+const CAR_BRANDS = [
+  { name: "Chevrolet", models: ["Tracker", "Gentra", "Cobalt", "Onix", "Malibu", "Tahoe", "Monza", "Damas"] },
+  { name: "BYD", models: ["Song Plus", "Chazor", "Han", "Tang", "Seal", "Yuan Plus"] },
+  { name: "Kia", models: ["K5", "Sonet", "Sportage", "Sorento", "Carnival", "K8"] },
+  { name: "Hyundai", models: ["Elantra", "Sonata", "Tucson", "Santa Fe", "Palisade"] },
+  { name: "Mercedes-Benz", models: ["E-Class", "C-Class", "S-Class", "GLE", "G-Class (Gelik)"] },
+  { name: "BMW", models: ["3 Series", "5 Series", "7 Series", "X5", "X7"] },
+  { name: "Toyota", models: ["Camry", "Corolla", "RAV4", "Prado", "Land Cruiser 300"] },
+  { name: "Chery", models: ["Tiggo 7 Pro", "Tiggo 8 Pro", "Arrizo 6 Pro"] },
+  { name: "Geely", models: ["Monjaro", "Coolray", "Tugella"] }
+];
